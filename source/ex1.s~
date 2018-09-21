@@ -83,18 +83,8 @@
 
     	.thumb_func
 _reset:
-		ldr r0, =a
-		
+		ldr r0, =vars
 		ldr r1, [r0]
-		ldr r2, [r0, #4]
-		str r2, [r1, #CMU_HFPERCLKEN0]
-		
-		ldr r1, [r0, #8]
-		ldr r2, [r0, #12]
-		str r2, [r1, #GPIO_CTRL]
-		
-		str r1, [r0]
-		
 	    b .  // do nothing
 	
 	/////////////////////////////////////////////////////////////////////////////
@@ -117,11 +107,7 @@ dummy_handler:
 
 
 .section .data
-a:
-		.word CMU_BASE
-		.word 0x00002000 // Value to set into the previous register; Purpose: enable GPIO clock
-		.word GPIO_PA_BASE
-		.word 0x00000002 // set drive strength
+vars:
 		.word GPIO_PA_BASE
 		.word 12
 		
