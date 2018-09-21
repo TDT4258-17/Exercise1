@@ -83,17 +83,63 @@
 
     	.thumb_func
 _reset:
-		ldr r0, =a
+
+		// Try #1
+	//	ldr r0, =a
 		
-		ldr r1, [r0]
-		ldr r2, [r0, #4]
-		str r2, [r1, #CMU_HFPERCLKEN0]
+	//	ldr r1, [r0]
+	//	ldr r2, [r0, #4]
+	//	str r2, [r1, #CMU_HFPERCLKEN0]
 		
-		ldr r1, [r0, #8]
-		ldr r2, [r0, #12]
-		str r2, [r1, #GPIO_CTRL]
+	//	ldr r1, [r0, #8]	// Load Port a base address
+	//	ldr r2, [r0, #12]
+	//	str r2, [r1, #GPIO_CTRL]
 		
+	//	ldr r2, [r0, #16]
+	//	str r2, [r1, #GPIO_MODEH]
+		
+	//	mov r2, #255
+	//	lsl r3, r2, #7
+		
+	//	str r3, [r1, #GPIO_DOUT]
+	
+	
+		// Try #2
+	//	ldr r0, =CMU_BASE
+	//	ldr r1, =0x00002000
+	//	str r1, [r0, #CMU_HFPERCLKEN0]
+		
+	//	ldr r0, =GPIO_PA_BASE
+	//	mov r1, #2
+	//	str r1, [r0, #GPIO_CTRL]
+		
+	//	ldr r1, =0x55555555
+	//	str r1, [r0, #GPIO_MODEH]
+		
+	//	ldr r1, =0x0000ff00
+	//	str r1, [r0, #GPIO_DOUT]
+	
+		
+		// Try #3
+		ldr r0, =0x400c8000
+		ldr r1, =0b10000000000000
+		str r1, [r0, #0x44]
+		ldr r1, =0b100000000
+		str r1, [r0, #4]
+		
+		ldr r0, =0x40006000
+		mov r1, #2
 		str r1, [r0]
+		
+		ldr r1, =0x55555555
+		str r1, [r0, #0x08]
+		
+		ldr r1, =0x0000ff00
+		str r1, [r0, #0x0c]
+		
+
+		
+		
 		
 	    b .  // do nothing
 	
@@ -122,8 +168,7 @@ a:
 		.word 0x00002000 // Value to set into the previous register; Purpose: enable GPIO clock
 		.word GPIO_PA_BASE
 		.word 0x00000002 // set drive strength
-		.word GPIO_PA_BASE
-		.word 12
+		.word 0x55555555 // set pin modes
 		
 
 		
