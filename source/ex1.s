@@ -121,21 +121,35 @@ _reset:
 	
 		
 		// Try #3
-		ldr r0, =0x400c8000
-		ldr r1, =0b10000000000000
-		str r1, [r0, #0x44]
-		ldr r1, =0b100000000
-		str r1, [r0, #4]
+	//	ldr r0, =0x400c8000
+	//	ldr r1, =0b10000000000000
+	//	str r1, [r0, #0x44]
 		
-		ldr r0, =0x40006000
-		mov r1, #2
-		str r1, [r0]
+	//	ldr r0, =0x40006000
+	//	mov r1, #2
+	//	str r1, [r0]
 		
-		ldr r1, =0x55555555
-		str r1, [r0, #0x08]
+	//	ldr r1, =0x55555555
+	//	str r1, [r0, #0x08]
 		
-		ldr r1, =0x0000ff00
-		str r1, [r0, #0x0c]
+	//	ldr r1, =0x0000ff00
+	//	str r1, [r0, #0x0c]
+		
+		
+		// Try #4
+		ldr r1, =0x400c8000			// CMU base address
+		ldr r0, =0b10000000000000
+		str r0, [r1, #0x44]			// set 13th bit
+		
+		ldr r1, =0x40006000			// GPIO PORTA base address
+		mov r0, #2
+		str r0, [r1]				// Set drive mode
+		
+		ldr r0, =0x55555555
+		str r0, [r1, #0x08]			// set high bits pin mode
+		
+		ldr r0, =0x00000000
+		str r0, [r1, #0x10]			// Set pins low, to turn leds on
 		
 
 		
