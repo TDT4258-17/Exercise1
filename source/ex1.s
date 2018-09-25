@@ -104,17 +104,18 @@ _reset:
 		mov r1, #0xff
 		str r1, [r2, #GPIO_DOUT]	// Enable pullup resistors
 		
+		ldr r2, =GPIO_BASE
 		ldr r1, =0x22222222
 		str r1, [r2, #GPIO_EXTIPSELL]
 		
+		mov r1, #0xff
+		str r1, [r2, #GPIO_EXTIFALL]
+		str r1, [r2, #GPIO_EXTIRISE]
+		str r1, [r2, #GPIO_IEN]
 		
 		
-
-loop:		
-		
-		ldr r1, [r2, #GPIO_DIN]		// Read PortC / Buttons
-		lsl r1, r1, #8
-		str r1, [r0, #GPIO_DOUT]	// Set Leds
+	
+loop:
 		
 		b loop
 	
@@ -127,6 +128,15 @@ loop:
 	
         .thumb_func
 gpio_handler:  
+		
+		// Resetting interrupt flags
+		ldr r2, =GPIO_BASE
+		ldr r0, [r2, #GPIO_IF]
+		str r0, [r2, #GPIO_IFC]
+		
+		
+		
+		
 		
 	    b .  // do nothing
 	

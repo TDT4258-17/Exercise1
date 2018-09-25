@@ -83,7 +83,8 @@
 
     	.thumb_func
 _reset:
-	
+		
+		
 	
 		ldr r0, =CMU_BASE
 		ldr r1, =0x00002000
@@ -102,6 +103,12 @@ _reset:
 		
 		mov r1, #0xff
 		str r1, [r2, #GPIO_DOUT]	// Enable pullup resistors
+		
+		ldr r1, =0x22222222
+		str r1, [r2, #GPIO_EXTIPSELL]
+		
+		
+		
 
 loop:		
 		
@@ -120,7 +127,7 @@ loop:
 	
         .thumb_func
 gpio_handler:  
-
+		
 	    b .  // do nothing
 	
 	/////////////////////////////////////////////////////////////////////////////
