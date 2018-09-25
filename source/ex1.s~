@@ -104,7 +104,9 @@ _reset:
 	//	str r3, [r1, #GPIO_DOUT]
 	
 	
-		// Try #2
+	
+	
+	
 		ldr r0, =CMU_BASE
 		ldr r1, =0x00002000
 		str r1, [r0, #CMU_HFPERCLKEN0]	// Enable GPIO peripheral clock
@@ -125,9 +127,9 @@ _reset:
 
 loop:		
 		
-		ldr r1, [r2, #GPIO_DIN]
+		ldr r1, [r2, #GPIO_DIN]		// Read PortC / Buttons
 		lsl r1, r1, #8
-		str r1, [r0, #GPIO_DOUT]
+		str r1, [r0, #GPIO_DOUT]	// Set Leds
 		
 		b loop
 		
@@ -155,13 +157,12 @@ dummy_handler:
 
 .section .data
 vars:
-		.long CMU_BASE
-		.long 0x00002000 // Value to set to CMU_BASE; Purpose: enable GPIO clock
-		.long GPIO_PA_BASE
-		.long 0x00000002 // set drive strength
-		.long 0x55555555 // set pin modes
-		.long 255
-
+		.word CMU_BASE
+		.word 0x00002000 // Value set to CMU_BASE; Purpose: enable GPIO clock
+		.word GPIO_PA_BASE
+		.word 0x00000002 // set drive strength
+		.word 0x55555555 // set pin modes
+	
 		
 
 

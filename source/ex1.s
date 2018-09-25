@@ -83,28 +83,8 @@
 
     	.thumb_func
 _reset:
-
-		// Try #1 - Doesnt work
-	//	ldr r0, =vars
-		
-	//	ldr r1, [r0]
-	//	ldr r2, [r0, #4]
-	//	str r2, [r1, #CMU_HFPERCLKEN0]
-		
-	//	ldr r1, [r0, #8]	// Load Port a base address
-	//	ldr r2, [r0, #12]
-	//	str r2, [r1, #GPIO_CTRL]
-		
-	//	ldr r2, [r0, #16]
-	//	str r2, [r1, #GPIO_MODEH]
-	
-	//	mov r2, #0xf0
-	//	lsl r3, r2, #7
-	
-	//	str r3, [r1, #GPIO_DOUT]
 	
 	
-		// Try #2
 		ldr r0, =CMU_BASE
 		ldr r1, =0x00002000
 		str r1, [r0, #CMU_HFPERCLKEN0]	// Enable GPIO peripheral clock
@@ -130,9 +110,6 @@ loop:
 		str r1, [r0, #GPIO_DOUT]	// Set Leds
 		
 		b loop
-		
-		
-	    b .  // do nothing
 	
 	/////////////////////////////////////////////////////////////////////////////
 	//
@@ -151,17 +128,5 @@ gpio_handler:
         .thumb_func
 dummy_handler:  
         b .  // do nothing
-
-
-.section .data
-vars:
-		.long CMU_BASE
-		.long 0x00002000 // Value to set to CMU_BASE; Purpose: enable GPIO clock
-		.long GPIO_PA_BASE
-		.long 0x00000002 // set drive strength
-		.long 0x55555555 // set pin modes
-		.long 255
-
-		
 
 
