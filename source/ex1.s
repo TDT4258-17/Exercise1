@@ -105,27 +105,30 @@ _reset:
 		str r1, [r2, #GPIO_DOUT]	// Enable pullup resistors
 		
 		
+		ldr r2, =ISER0
+		ldr r1, =0x802
+		str r1, [r2]
+		
 		ldr r2, =GPIO_BASE
 		ldr r1, =0x22222222
 		str r1, [r2, #GPIO_EXTIPSELL]
 		
 		mov r1, #0xff
+		str r1, [r2, #GPIO_IEN]
 		str r1, [r2, #GPIO_EXTIFALL]
 		str r1, [r2, #GPIO_EXTIRISE]
-		str r1, [r2, #GPIO_IEN]
-		
-		
-		ldr r2, =ISER0
-		ldr r1, =0x802
-		str r1, [r2]
 		
 		ldr r3, =GPIO_BASE
 		ldr r0, [r3, #GPIO_IF]
 		str r0, [r3, #GPIO_IFC]
 		
+		ldr r3, =SCR
+		mov r0, #6
+		str r0, [r3]
 		
 loop:
 		
+		wfi
 		b loop
 	
 	/////////////////////////////////////////////////////////////////////////////
@@ -150,7 +153,9 @@ gpio_handler:
 		lsl r1, r1, #8
 		str r1, [r0, #GPIO_DOUT]	// Set Leds
 		
-		b loop
+		bx lr
+		// b loop	// why doenst this work, but bx lr does?
+					// why is loop not lr?
 		
 	/////////////////////////////////////////////////////////////////////////////
 	
