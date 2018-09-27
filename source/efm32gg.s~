@@ -29,7 +29,7 @@
         GPIO_PINLOCKN = 0x20
         
 	    GPIO_BASE = 0x40006100
-
+		
 	    // register offsets from base address
         GPIO_EXTIPSELL = 0x00
         GPIO_EXTIPSELH = 0x04
@@ -43,7 +43,8 @@
       	// CMU
 	
         CMU_BASE = 0x400c8000
-
+		
+        CMU_HFCORECLKDIV = 0x004
         CMU_HFPERCLKDIV = 0x008
         CMU_HFPERCLKEN0 = 0x044
         CMU_HFPERCLKEN0_GPIO = 13
@@ -70,8 +71,11 @@
 	    //////////////////////////////////////////////////////////////////////
         // EMU
 
+	
+
 	    EMU_BASE = 0x400c6000
         EMU_CTRL = 0x000
+        EMU_MEMCTRL = 0x04
 
 	    //////////////////////////////////////////////////////////////////////
         // System Control Block

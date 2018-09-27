@@ -79,16 +79,25 @@
 	/////////////////////////////////////////////////////////////////////////////
 
 		.globl  _reset
-		.type   _reset, %function
+		.type   _reset, %function 		// Seems not necessary
 
-    	.thumb_func
+    	.thumb_func		// Seems not necessary
 _reset:
-		
 		
 	
 		ldr r0, =CMU_BASE
+		
+		ldr r1, =0x04
+		str r1, [r0, #CMU_HFCORECLKDIV]
 		ldr r1, =0x00002000
 		str r1, [r0, #CMU_HFPERCLKEN0]	// Enable GPIO peripheral clock
+		
+		
+		ldr r0, =EMU_BASE
+		ldr r1, =0x04
+		str r1, [r0, #EMU_MEMCTRL]
+		
+		
 		
 		ldr r0, =GPIO_PA_BASE
 		mov r1, #1
@@ -103,6 +112,10 @@ _reset:
 		
 		mov r1, #0xff
 		str r1, [r2, #GPIO_DOUT]	// Enable pullup resistors
+		
+		
+		
+		
 		
 		
 		ldr r2, =ISER0
@@ -122,12 +135,13 @@ _reset:
 		ldr r0, [r3, #GPIO_IF]
 		str r0, [r3, #GPIO_IFC]
 		
-		ldr r3, =SCR
-		mov r0, #6
-		str r0, [r3]
+//		ldr r3, =SCR
+//		mov r0, #6
+//		str r0, [r3]
 		
 loop:
 		
+//		wfi
 		b loop
 	
 	/////////////////////////////////////////////////////////////////////////////
