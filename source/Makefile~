@@ -26,14 +26,15 @@ clean :
 .PHONY : baseline
 baseline :
 	-rm -rf *.o *.elf *.bin *.hex
-	${AS} ${ASFLAGS} ex1_baseline.s -o ex1.o
+	${AS} ${ASFLAGS} ex1.s -o ex1.o
 	${LD} -T ${LINKERSCRIPT} ex1.o -o ex1.elf ${LDFLAGS} 
 	${OBJCOPY} -j .text -O binary ex1.elf ex1.bin
 	
 .PHONY : improved
 improved :
 	-rm -rf *.o *.elf *.bin *.hex
-	${AS} ${ASFLAGS} ex1_improved.s -o ex1.o
+	${AS} ${ASFLAGS} ex1.s -o ex1.o
 	${LD} -T ${LINKERSCRIPT} ex1.o -o ex1.elf ${LDFLAGS} 
 	${OBJCOPY} -j .text -O binary ex1.elf ex1.bin
+	
 	

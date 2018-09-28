@@ -84,13 +84,13 @@
     	.thumb_func		// Seems not necessary
 _reset:
 		
-	
+		// Clock related setup
 		ldr r0, =CMU_BASE
 		
 		ldr r1, =0x04
-		str r1, [r0, #CMU_HFCORECLKDIV]
+		str r1, [r0, #CMU_HFCORECLKDIV]		// Setting clock divider for 
 		ldr r1, =0x00002000
-		str r1, [r0, #CMU_HFPERCLKEN0]	// Enable GPIO peripheral clock
+		str r1, [r0, #CMU_HFPERCLKEN0]		// Enable GPIO peripheral clock
 		
 		// These lines break the program
 	//	ldr r0, =EMU_BASE
@@ -98,42 +98,42 @@ _reset:
 	//	str r1, [r0, #EMU_MEMCTRL]
 		
 		
-		
+		// Setting up GPIO pins
 		ldr r0, =GPIO_PA_BASE
 		mov r1, #1
-		str r1, [r0, #GPIO_CTRL]	// set lowstr drive strength
+		str r1, [r0, #GPIO_CTRL]			// set lowstr drive strength
 		
 		ldr r1, =0x55555555
-		str r1, [r0, #GPIO_MODEH]	// Set each pin to output
+		str r1, [r0, #GPIO_MODEH]			// Set each pin to output
 		
 		ldr r2, =GPIO_PC_BASE
 		ldr r1, =0x33333333
-		str r1, [r2, #GPIO_MODEL]	// Set Port C pins as input
+		str r1, [r2, #GPIO_MODEL]			// Set Port C pins as input
 		
 		mov r1, #0xff
-		str r1, [r2, #GPIO_DOUT]	// Enable pullup resistors
+		str r1, [r2, #GPIO_DOUT]			// Enable pullup resistors
 		
 		
 		
 		
 		
-		
+		// Setting up interrupts
 		ldr r2, =ISER0
 		ldr r1, =0x802
-		str r1, [r2]
+		str r1, [r2]						// Enable interrupts
 		
 		ldr r2, =GPIO_BASE
 		ldr r1, =0x22222222
-		str r1, [r2, #GPIO_EXTIPSELL]
+		str r1, [r2, #GPIO_EXTIPSELL]		// 
 		
 		mov r1, #0xff
-		str r1, [r2, #GPIO_IEN]
-		str r1, [r2, #GPIO_EXTIFALL]
-		str r1, [r2, #GPIO_EXTIRISE]
+		str r1, [r2, #GPIO_IEN]				// enabling interrupts on lower 8 bits
+		str r1, [r2, #GPIO_EXTIFALL]		// enabling interrupts on rising ...
+		str r1, [r2, #GPIO_EXTIRISE]		// ... and falling edge.
 		
 		ldr r3, =GPIO_BASE
 		ldr r0, [r3, #GPIO_IF]
-		str r0, [r3, #GPIO_IFC]
+		str r0, [r3, #GPIO_IFC]				// Initially clearing interrupts
 		
 //		ldr r3, =SCR
 //		mov r0, #6

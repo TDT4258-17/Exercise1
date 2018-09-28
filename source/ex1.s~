@@ -92,10 +92,10 @@ _reset:
 		ldr r1, =0x00002000
 		str r1, [r0, #CMU_HFPERCLKEN0]	// Enable GPIO peripheral clock
 		
-		
-		ldr r0, =EMU_BASE
-		ldr r1, =0x04
-		str r1, [r0, #EMU_MEMCTRL]
+		// These lines break the program
+	//	ldr r0, =EMU_BASE
+	//	ldr r1, =0x04
+	//	str r1, [r0, #EMU_MEMCTRL]
 		
 		
 		
