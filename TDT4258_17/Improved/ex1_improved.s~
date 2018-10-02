@@ -92,6 +92,12 @@ _reset:
 		ldr r1, =0x00002000
 		str r1, [r0, #CMU_HFPERCLKEN0]		// Enable GPIO peripheral clock
 		
+		// These lines break the program, powering down ram modules
+	//	ldr r0, =EMU_BASE
+	//	ldr r1, =0x04
+	//	str r1, [r0, #EMU_MEMCTRL]
+		
+		
 		// Setting up GPIO pins
 		ldr r0, =GPIO_PA_BASE
 		mov r1, #1
