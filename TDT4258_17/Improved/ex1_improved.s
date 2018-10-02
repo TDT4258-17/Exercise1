@@ -79,7 +79,7 @@
 	//////////////////////////////////////////////////////////////////
 
 		.globl  _reset
-		.type   _reset, %function 		// Seems not necessary
+		.type   _reset, %function
 
     	.thumb_func		// Seems not necessary
 _reset:
@@ -159,7 +159,7 @@ gpio_handler:
 		lsl r1, r1, #8
 		str r1, [r0, #GPIO_DOUT]	// Set Leds
 		
-		bx lr
+		bx lr						// return from interrupt
 		
 	//////////////////////////////////////////////////////////////////
 	
